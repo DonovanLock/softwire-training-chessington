@@ -20,18 +20,26 @@ export default class Pawn extends Piece {
         const moves: Square[] = [];
         const colour = this.player;
 
-        function pawnMove(squaresMoved: number, colour: Player) {
+        const isSquareEmpty = (square: Square) => {
+            return board.getPiece(square) === undefined;
+        }
+
+        const getForwardSquare = (square: Square, colour: Player) => {
             if (colour === Player.WHITE) {
-                moves.push(Square.at(currentSquare.row + squaresMoved, currentSquare.col));
+                return Square.at(square.row + 1, square.col);
             }
             else {
-                moves.push(Square.at(currentSquare.row - squaresMoved, currentSquare.col));
+                return Square.at(square.row - 1, square.col);
             }
         }
 
-        pawnMove(1,colour);
-        if (currentSquare.row === this.STARTING_ROW) {
-            pawnMove(2,colour);
+        let nextSquare = getForwardSquare(currentSquare, colour);
+        if (isSquareEmpty(nextSquare)) {
+            moves.push(nextSquare);
+            nextSquare = getForwardSquare(nextSquare, colour);
+            if (isSquareEmpty(nextSquare) && currentSquare.row === this.STARTING_ROW) {
+                moves.push(nextSquare);
+            }
         }
         return moves;
     }
