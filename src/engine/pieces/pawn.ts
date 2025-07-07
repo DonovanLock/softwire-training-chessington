@@ -3,6 +3,13 @@ import Player from '../player';
 import Board from '../board';
 import Square from '../square';
 
+//EN PASSANT:
+//things to track:
+//attacking pawn is on the correct row
+//victim pawn has just moved two spaces
+//  (every move which is not a two-pawn move should reset this bool to false)
+
+
 export default class Pawn extends Piece {
     private STARTING_ROW: number;
     public constructor(player: Player) {

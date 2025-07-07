@@ -83,6 +83,18 @@ describe('Pawn', () => {
 
             moves.should.not.deep.include(Square.at(5, 3));
         });
+
+        it('can perform en passant', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPawn = new Pawn(Player.BLACK);
+            board.setPiece(Square.at(4,5), pawn);
+            board.setPiece(Square.at(6,4), opposingPawn);
+            board.currentPlayer = Player.BLACK;
+            opposingPawn.moveTo(board, Square.at(4,4));
+
+            const moves = pawn.getAvailableMoves(board);
+            moves.should.include(Square.at(5,4));
+        });
     });
 
     describe('black pawns', () => {
