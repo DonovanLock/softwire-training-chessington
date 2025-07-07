@@ -30,6 +30,21 @@ export default class Pawn extends Piece {
         }
 
         let nextSquare = getForwardSquare(currentSquare, colour);
+        const leftSquare = Square.at(nextSquare.row, nextSquare.col - 1);
+        const rightSquare = Square.at(nextSquare.row, nextSquare.col + 1);
+        if (board.isSquareOnBoard(leftSquare)
+            && board.getPiece(leftSquare)
+            && board.getPiece(leftSquare)?.pieceType !== PieceType.KING
+            && board.getPiece(leftSquare)?.player !== this.player) {
+                moves.push(leftSquare);
+        }
+        if (board.isSquareOnBoard(rightSquare)
+            && board.getPiece(rightSquare)
+            && board.getPiece(rightSquare)?.pieceType !== PieceType.KING
+            && board.getPiece(rightSquare)?.player !== this.player) {
+                moves.push(rightSquare);
+        }
+
         if (board.isSquareOnBoard(nextSquare) && board.isSquareEmpty(nextSquare)) {
             moves.push(nextSquare);
             nextSquare = getForwardSquare(nextSquare, colour);
