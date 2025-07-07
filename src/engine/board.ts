@@ -24,6 +24,12 @@ export default class Board {
             return this.getPiece(square) === undefined;
     }
 
+    public isSquareOnBoard(square: Square) {
+        let row = square.row;
+        let col = square.col;
+        return (0 <= row && row < GameSettings.BOARD_SIZE) && (0 <= col && col < GameSettings.BOARD_SIZE)
+    }
+
     public findPiece(pieceToFind: Piece) {
         for (let row = 0; row < this.board.length; row++) {
             for (let col = 0; col < this.board[row].length; col++) {

@@ -38,28 +38,23 @@ export default class Piece {
         return moves;
     }
 
-    public getLateralMoves(board: Board, square: Square) {
+    public getDirectionalMoves(board: Board, square: Square, rowChange: number, colChange: number) {
         const moves = [];
-        let i = square.row - 1;
-        while (i >= 0 && board.isSquareEmpty(Square.at(i, square.col))) {
-            moves.push(Square.at(i, square.col));
-            i--;
+        let i = square.row + rowChange;
+        let j = square.col + colChange;
+
+        while (board.isSquareOnBoard(Square.at(i,j)) && board.isSquareEmpty(Square.at(i, j))) {
+            moves.push(Square.at(i, j));
+            i += rowChange;
+            j += colChange;
         }
-        i = square.row + 1;
-        while (i < GameSettings.BOARD_SIZE && board.isSquareEmpty(Square.at(i, square.col))) {
-            moves.push(Square.at(i, square.col));
-            i++;
-        }
-        i = square.col - 1;
-        while (i >= 0 && board.isSquareEmpty(Square.at(square.row, i))) {
-            moves.push(Square.at(square.row, i));
-            i--;
-        }
-        i = square.col + 1;
-        while (i < GameSettings.BOARD_SIZE && board.isSquareEmpty(Square.at(square.row, i))) {
-            moves.push(Square.at(square.row, i));
-            i++;
-        }
+        return moves;
+    }
+    public getLateralMoves(board: Board, square: Square) {
+        let moves: Square[] = this.getDirectionalMoves(board, square, 1, 0);
+        moves = [...moves,...this.getDirectionalMoves(board, square, -1, 0)]
+        moves = [...moves,...this.getDirectionalMoves(board, square, 0, 1)]
+        moves = [...moves,...this.getDirectionalMoves(board, square, 0, -1)]
         return moves;
     }
 }
