@@ -1,4 +1,4 @@
-import Piece from './piece';
+import Piece, { PieceType } from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
@@ -6,7 +6,7 @@ import Square from '../square';
 export default class Pawn extends Piece {
     private STARTING_ROW: number;
     public constructor(player: Player) {
-        super(player);
+        super(player, PieceType.PAWN);
         if (player === Player.WHITE) {
             this.STARTING_ROW = 1;
         }

@@ -1,4 +1,4 @@
-import Piece from './piece';
+import Piece, { PieceType } from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
@@ -8,7 +8,7 @@ type Move = [row:number,col:number];
 export default class Knight extends Piece {
     private moveList : Move[]= [[1,2],[1,-2],[-1,2],[-1,-2],[2,1],[-2,1],[2,-1],[-2,-1]];
     public constructor(player: Player) {
-        super(player);
+        super(player, PieceType.KNIGHT);
     }
 
     public getAvailableMoves(board: Board) {

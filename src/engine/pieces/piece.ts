@@ -1,13 +1,23 @@
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
-import GameSettings from '../gameSettings';
+
+export enum PieceType {
+    PAWN,
+    KNIGHT,
+    BISHOP,
+    ROOK,
+    QUEEN,
+    KING
+}
 
 export default class Piece {
     public player: Player;
+    public pieceType: PieceType;
 
-    public constructor(player: Player) {
+    public constructor(player: Player, pieceType: PieceType) {
         this.player = player;
+        this.pieceType = pieceType;
     }
 
     public getAvailableMoves(board: Board) {
@@ -32,11 +42,21 @@ export default class Piece {
         const moves = [];
         let i = square.row + rowChange;
         let j = square.col + colChange;
-
-        while (board.isSquareOnBoard(Square.at(i,j)) && board.isSquareEmpty(Square.at(i, j))) {
-            moves.push(Square.at(i, j));
+        let currSquare = Square.at(i,j);
+        while (board.isSquareOnBoard(currSquare) && board.isSquareEmpty(currSquare)) {
+            moves.push(currSquare);
             i += rowChange;
             j += colChange;
+            currSquare = Square.at(i,j);
+        }
+        if (board.isSquareOnBoard(currSquare)) {
+            let victimPiece = board.getPiece(currSquare);
+            let attackingPiece = board.getPiece(square);
+            if (victimPiece && attackingPiece && victimPiece.player !== attackingPiece.player) {
+                if (victimPiece.pieceType !== PieceType.KING) {
+                    moves.push(currSquare);
+                }
+            }
         }
         return moves;
     }
