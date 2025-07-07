@@ -38,17 +38,27 @@ export default class Piece {
         return moves;
     }
 
-    public getLateralMoves(square: Square) {
+    public getLateralMoves(board: Board, square: Square) {
         const moves = [];
-        const row = square.row;
-        const col = square.col;
-        for (let i = 0; i < GameSettings.BOARD_SIZE; i++) {
-            if (i !== row) {
-                moves.push(Square.at(i,col));
-            }
-            if (i !== col) {
-                moves.push(Square.at(row,i));
-            }
+        let i = square.row - 1;
+        while (i >= 0 && board.isSquareEmpty(Square.at(i, square.col))) {
+            moves.push(Square.at(i, square.col));
+            i--;
+        }
+        i = square.row + 1;
+        while (i < GameSettings.BOARD_SIZE && board.isSquareEmpty(Square.at(i, square.col))) {
+            moves.push(Square.at(i, square.col));
+            i++;
+        }
+        i = square.col - 1;
+        while (i >= 0 && board.isSquareEmpty(Square.at(square.row, i))) {
+            moves.push(Square.at(square.row, i));
+            i--;
+        }
+        i = square.col + 1;
+        while (i < GameSettings.BOARD_SIZE && board.isSquareEmpty(Square.at(square.row, i))) {
+            moves.push(Square.at(square.row, i));
+            i++;
         }
         return moves;
     }
