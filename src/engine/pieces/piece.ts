@@ -19,22 +19,12 @@ export default class Piece {
         board.movePiece(currentSquare, newSquare);
     }
 
-    public getDiagonalMoves(square: Square) {
-        const moves = [];
-        const row = square.row;
-        const col = square.col;
-        for (let i = 1; row + i < GameSettings.BOARD_SIZE && col + i < GameSettings.BOARD_SIZE; i++) {
-            moves.push(Square.at(row + i, col + i));
-        }
-        for (let i = 1; row - i >= 0 && col + i < GameSettings.BOARD_SIZE; i++) {
-            moves.push(Square.at(row - i, col + i));
-        }
-        for (let i = 1; row - i >= 0 && col - i >= 0; i++) {
-            moves.push(Square.at(row - i, col - i));
-        }
-        for (let i = 1; row + i < GameSettings.BOARD_SIZE && col - i >= 0; i++) {
-            moves.push(Square.at(row + i, col - i));
-        }
+    public getDiagonalMoves(board: Board, square: Square) {
+        const upRight = this.getDirectionalMoves(board, square, 1, 1);
+        const downRight = this.getDirectionalMoves(board, square, -1, 1);
+        const downLeft = this.getDirectionalMoves(board, square, -1, -1);
+        const upLeft = this.getDirectionalMoves(board, square, 1, -1);
+        const moves = [...upRight, ...downRight, ...downLeft, ...upLeft];
         return moves;
     }
 
