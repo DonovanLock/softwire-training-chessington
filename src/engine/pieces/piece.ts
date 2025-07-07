@@ -51,10 +51,11 @@ export default class Piece {
         return moves;
     }
     public getLateralMoves(board: Board, square: Square) {
-        let moves: Square[] = this.getDirectionalMoves(board, square, 1, 0);
-        moves = [...moves,...this.getDirectionalMoves(board, square, -1, 0)]
-        moves = [...moves,...this.getDirectionalMoves(board, square, 0, 1)]
-        moves = [...moves,...this.getDirectionalMoves(board, square, 0, -1)]
+        const up = this.getDirectionalMoves(board, square, 1, 0);
+        const down = this.getDirectionalMoves(board, square, -1, 0);
+        const right = this.getDirectionalMoves(board, square, 0, 1);
+        const left = this.getDirectionalMoves(board, square, 0, -1);
+        const moves = [...up, ...down, ...right, ...left];
         return moves;
     }
 }
