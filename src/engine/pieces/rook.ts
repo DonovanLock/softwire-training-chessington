@@ -14,10 +14,10 @@ export default class Rook extends Piece {
         const row = currSquare.row;
         const col = currSquare.col;
         for (let i = 0; i < 8; i++) {
-            if (i != row) {
+            if (i !== row) {
                 moves.push(Square.at(i,col));
             }
-            if (i != col) {
+            if (i !== col) {
                 moves.push(Square.at(row,i));
             }
         }
