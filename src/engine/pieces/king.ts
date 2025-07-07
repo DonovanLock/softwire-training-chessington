@@ -15,7 +15,10 @@ export default class King extends Piece {
         const currSquare = board.findPiece(this);
         const moves = [];
         for (let move of this.moveList) {
-            moves.push(Square.at(currSquare.row + move[0], currSquare.col + move[1]));
+            const newSquare = Square.at(currSquare.row + move[0], currSquare.col + move[1]);
+            if (board.isSquareOnBoard(newSquare)) {
+                moves.push(newSquare);
+            }
         }
 
         return moves;

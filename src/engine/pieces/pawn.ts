@@ -30,7 +30,7 @@ export default class Pawn extends Piece {
         }
 
         let nextSquare = getForwardSquare(currentSquare, colour);
-        if (board.isSquareEmpty(nextSquare)) {
+        if (board.isSquareOnBoard(nextSquare) && board.isSquareEmpty(nextSquare)) {
             moves.push(nextSquare);
             nextSquare = getForwardSquare(nextSquare, colour);
             if (board.isSquareEmpty(nextSquare) && currentSquare.row === this.STARTING_ROW) {
