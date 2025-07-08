@@ -93,8 +93,20 @@ describe('Pawn', () => {
             opposingPawn.moveTo(board, Square.at(4,4));
 
             const moves = pawn.getAvailableMoves(board);
-            moves.should.include(Square.at(5,4));
+            moves.should.deep.include(Square.at(5,4));
         });
+
+        it('en passant removes victim piece', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPawn = new Pawn(Player.BLACK);
+            board.setPiece(Square.at(4,5), pawn);
+            board.setPiece(Square.at(6,4), opposingPawn);
+            board.currentPlayer = Player.BLACK;
+            opposingPawn.moveTo(board, Square.at(4,4));
+            pawn.moveTo(board, Square.at(5,4));
+
+            expect(board.isSquareEmpty(Square.at(4,4))).toBeTruthy;
+        })
     });
 
     describe('black pawns', () => {
@@ -196,4 +208,28 @@ describe('Pawn', () => {
 
         moves.should.not.deep.include(Square.at(4, 3));
     });
+
+    it('can perform en passant', () => {
+            const pawn = new Pawn(Player.BLACK);
+            const opposingPawn = new Pawn(Player.WHITE);
+            board.setPiece(Square.at(3,5), pawn);
+            board.setPiece(Square.at(1,4), opposingPawn);
+            board.currentPlayer = Player.WHITE;
+            opposingPawn.moveTo(board, Square.at(3,4));
+
+            const moves = pawn.getAvailableMoves(board);
+            moves.should.deep.include(Square.at(2,4));
+    });
+
+    it('en passant removes victim piece', () => {
+            const pawn = new Pawn(Player.BLACK);
+            const opposingPawn = new Pawn(Player.WHITE);
+            board.setPiece(Square.at(3,5), pawn);
+            board.setPiece(Square.at(1,4), opposingPawn);
+            board.currentPlayer = Player.WHITE;
+            opposingPawn.moveTo(board, Square.at(3,4));
+            pawn.moveTo(board, Square.at(2,4));
+
+            expect(board.isSquareEmpty(Square.at(3,4))).toBeTruthy;
+    })
 });
