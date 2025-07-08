@@ -29,7 +29,7 @@ export default class Pawn extends Piece {
 
         if ((board.isSquareOnBoard(leftDiagSquare) 
                 && board.getPiece(leftDiagSquare)
-                && board.getPiece(leftDiagSquare)?.pieceType !== PieceType.KING
+                && board.getPiece(leftDiagSquare)?.pieceType !== "king"
                 && board.getPiece(leftDiagSquare)?.player !== this.player) 
             || (
                 board.pawnMoved2Steps 
@@ -39,7 +39,7 @@ export default class Pawn extends Piece {
         }
         if ((board.isSquareOnBoard(rightDiagSquare)
             && board.getPiece(rightDiagSquare)
-            && board.getPiece(rightDiagSquare)?.pieceType !== PieceType.KING
+            && board.getPiece(rightDiagSquare)?.pieceType !== "king"
             && board.getPiece(rightDiagSquare)?.player !== this.player)
         || (
             board.pawnMoved2Steps

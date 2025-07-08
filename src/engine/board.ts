@@ -63,7 +63,7 @@ export default class Board {
     public movePiece(fromSquare: Square, toSquare: Square) {
         const movingPiece = this.getPiece(fromSquare);        
         if (!!movingPiece && movingPiece.player === this.currentPlayer) {
-            if (movingPiece.pieceType === PieceType.PAWN && 
+            if (movingPiece.pieceType === "pawn" && 
                 Board.getForwardSquare(Board.getForwardSquare(fromSquare, this.currentPlayer), this.currentPlayer).equals(toSquare)
                 ) {
                     this.pawnMoved2Steps = movingPiece;

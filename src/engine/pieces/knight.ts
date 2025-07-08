@@ -17,7 +17,7 @@ export default class Knight extends Piece {
         for (let move of this.moveList) {
             const newSquare = Square.at(currSquare.row + move[0], currSquare.col + move[1]);
             if (board.isSquareOnBoard(newSquare)
-                && board.getPiece(newSquare)?.pieceType !== PieceType.KING
+                && board.getPiece(newSquare)?.pieceType !== "king"
                 && board.getPiece(newSquare)?.player !== this.player) {
                 moves.push(newSquare);
             }

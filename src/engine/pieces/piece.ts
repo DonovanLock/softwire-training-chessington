@@ -3,12 +3,12 @@ import Board from '../board';
 import Square from '../square';
 
 export enum PieceType {
-    PAWN,
-    KNIGHT,
-    BISHOP,
-    ROOK,
-    QUEEN,
-    KING
+    PAWN = "pawn",
+    KNIGHT = "knight",
+    BISHOP = "bishop",
+    ROOK = "rook",
+    QUEEN = "queen",
+    KING = "king"
 }
 
 export default class Piece {
@@ -56,7 +56,7 @@ export default class Piece {
             let victimPiece = board.getPiece(currSquare);
             let attackingPiece = board.getPiece(square);
             if (victimPiece && attackingPiece && victimPiece.player !== attackingPiece.player) {
-                if (victimPiece.pieceType !== PieceType.KING) {
+                if (victimPiece.pieceType !== "king") {
                     moves.push(currSquare);
                 }
             }
