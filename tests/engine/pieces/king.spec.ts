@@ -4,6 +4,8 @@ import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Pawn from '../../../src/engine/pieces/pawn';
 import Rook from '../../../src/engine/pieces/rook';
+import { expect } from 'chai';
+import { PieceType } from '../../../src/engine/pieces/piece';
 
 describe('King', () => {
     let board: Board;
@@ -115,6 +117,28 @@ describe('King', () => {
         const moves = king.getAvailableMoves(board);
         moves.should.deep.include(Square.at(7,2));
     });
+
+    it('moves rook when castling as white', () => {
+        const king = new King(Player.WHITE);
+        const rook = new Rook(Player.WHITE);
+        board.setPiece(Square.at(0,4), king);
+        board.setPiece(Square.at(0,0), rook);
+
+        king.moveTo(board,Square.at(0,2));
+        expect(board.isSquareEmpty(Square.at(0,0)) && 
+        board.getPiece(Square.at(0,3))?.pieceType === PieceType.ROOK).to.be.true;
+    })
+
+        it('moves rook when castling as black', () => {
+        const king = new King(Player.BLACK);
+        const rook = new Rook(Player.BLACK);
+        board.setPiece(Square.at(7,4), king);
+        board.setPiece(Square.at(7,7), rook);
+
+        king.moveTo(board,Square.at(7,6));
+        expect(board.isSquareEmpty(Square.at(7,7)) && 
+        board.getPiece(Square.at(7,5))?.pieceType === PieceType.ROOK).to.be.true;
+    })
 
     /* TODO:
      * can't castle when path is under attack

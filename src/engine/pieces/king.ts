@@ -48,4 +48,26 @@ export default class King extends Piece {
         }
         return moves;
     }
+
+    public moveTo(board: Board, newSquare: Square) {
+        if (!this.hasMoved) {
+            if (newSquare.equals(Square.at(this.STARTING_ROW,2))) {
+                const movedRook = board.getPiece(Square.at(this.STARTING_ROW, 0));
+                board.setPiece(Square.at(this.STARTING_ROW, 0), undefined);
+                board.setPiece(Square.at(this.STARTING_ROW, 3), movedRook);
+                if (movedRook) {
+                    movedRook.hasMoved = true;
+                }
+            }
+            else if (newSquare.equals(Square.at(this.STARTING_ROW,6))) {
+                const movedRook = board.getPiece(Square.at(this.STARTING_ROW, 7));
+                board.setPiece(Square.at(this.STARTING_ROW, 7), undefined);
+                board.setPiece(Square.at(this.STARTING_ROW, 5), movedRook);
+                if (movedRook) {
+                    movedRook.hasMoved = true;
+                }
+            }
+        }
+        super.moveTo(board, newSquare);
+    }
 }
