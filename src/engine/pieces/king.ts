@@ -8,8 +8,15 @@ type Move = [row:number,col:number];
 
 export default class King extends Piece {
     private moveList : Move[]= [[1,1],[1,0],[1,-1],[0,1],[0,-1],[-1,1],[-1,0],[-1,-1]];
+    private STARTING_ROW : number;
     public constructor(player: Player) {
         super(player, PieceType.KING);
+        if (player === Player.WHITE) {
+            this.STARTING_ROW = 0;
+        }
+        else {
+            this.STARTING_ROW = 7;
+        }
     }
 
     public getAvailableMoves(board: Board) {
@@ -24,40 +31,21 @@ export default class King extends Piece {
             }
         }
         if (!this.hasMoved) {
-            if (this.player === Player.WHITE) {
-                const leftRook = board.getPiece(Square.at(0,0));
-                const rightRook = board.getPiece(Square.at(0,7));
-                if (leftRook?.pieceType === PieceType.ROOK
-                    && !leftRook.hasMoved
-                    && (leftRook as Rook).getAvailableMoves(board).some(
-                        square => square.equals(Square.at(0,3)))) {
-                        moves.push(Square.at(0,2));
-                }
-                if (rightRook?.pieceType === PieceType.ROOK
-                    && !rightRook.hasMoved
-                    && (rightRook as Rook).getAvailableMoves(board).some(
-                        square => square.equals(Square.at(0,5)))) {
-                        moves.push(Square.at(0,6));
-                }
+            const leftRook = board.getPiece(Square.at(this.STARTING_ROW,0));
+            const rightRook = board.getPiece(Square.at(this.STARTING_ROW,7));
+            if (leftRook?.pieceType === PieceType.ROOK
+                && !leftRook.hasMoved
+                && (leftRook as Rook).getAvailableMoves(board).some(
+                    square => square.equals(Square.at(this.STARTING_ROW,3)))) {
+                    moves.push(Square.at(this.STARTING_ROW,2));
             }
-            else {
-                const leftRook = board.getPiece(Square.at(7,0));
-                const rightRook = board.getPiece(Square.at(7,7));
-                if (leftRook?.pieceType === PieceType.ROOK
-                    && !leftRook.hasMoved
-                    && (leftRook as Rook).getAvailableMoves(board).some(
-                        square => square.equals(Square.at(7,3)))) {
-                        moves.push(Square.at(7,2));
-                }
-                if (rightRook?.pieceType === PieceType.ROOK
-                    && !rightRook.hasMoved
-                    && (rightRook as Rook).getAvailableMoves(board).some(
-                        square => square.equals(Square.at(7,5)))) {
-                        moves.push(Square.at(7,6));
-                }
+            if (rightRook?.pieceType === PieceType.ROOK
+                && !rightRook.hasMoved
+                && (rightRook as Rook).getAvailableMoves(board).some(
+                    square => square.equals(Square.at(this.STARTING_ROW,5)))) {
+                    moves.push(Square.at(this.STARTING_ROW,6));
             }
         }
-
         return moves;
     }
 }
