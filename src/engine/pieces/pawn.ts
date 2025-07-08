@@ -62,6 +62,6 @@ export default class Pawn extends Piece {
         if (currentSquare.col !== newSquare.col && board.isSquareEmpty(newSquare)) {
             board.setPiece(Board.getBackwardSquare(newSquare, this.player), undefined);
         }
-        board.movePiece(currentSquare, newSquare);
+        super.moveTo(board, newSquare);
     }
 }

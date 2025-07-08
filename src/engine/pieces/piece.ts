@@ -14,10 +14,12 @@ export enum PieceType {
 export default class Piece {
     public player: Player;
     public pieceType: PieceType;
+    public hasMoved: boolean;
 
     public constructor(player: Player, pieceType: PieceType) {
         this.player = player;
         this.pieceType = pieceType;
+        this.hasMoved = false
     }
 
     public getAvailableMoves(board: Board) {
@@ -26,6 +28,7 @@ export default class Piece {
 
     public moveTo(board: Board, newSquare: Square) {
         const currentSquare = board.findPiece(this);
+        this.hasMoved = true;
         board.movePiece(currentSquare, newSquare);
     }
 
