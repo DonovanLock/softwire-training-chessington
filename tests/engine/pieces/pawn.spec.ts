@@ -4,6 +4,7 @@ import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Rook from '../../../src/engine/pieces/rook';
 import King from '../../../src/engine/pieces/king';
+import { expect } from 'chai';
 
 describe('Pawn', () => {
 
@@ -105,7 +106,7 @@ describe('Pawn', () => {
             opposingPawn.moveTo(board, Square.at(4,4));
             pawn.moveTo(board, Square.at(5,4));
 
-            expect(board.isSquareEmpty(Square.at(4,4))).toBeTruthy;
+            expect(board.isSquareEmpty(Square.at(4,4))).to.be.true;
         })
     });
 
@@ -230,6 +231,6 @@ describe('Pawn', () => {
             opposingPawn.moveTo(board, Square.at(3,4));
             pawn.moveTo(board, Square.at(2,4));
 
-            expect(board.isSquareEmpty(Square.at(3,4))).toBeTruthy;
+            expect(board.isSquareEmpty(Square.at(3,4))).to.be.true;
     })
 });
