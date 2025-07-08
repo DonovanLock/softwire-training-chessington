@@ -51,6 +51,15 @@ export default class Board {
         }
     }
 
+    public static getBackwardSquare(square: Square, colour: Player) {
+        if (colour === Player.WHITE) {
+            return Square.at(square.row - 1, square.col);
+        }
+        else {
+            return Square.at(square.row + 1, square.col);
+        }
+    }
+
     public movePiece(fromSquare: Square, toSquare: Square) {
         const movingPiece = this.getPiece(fromSquare);        
         if (!!movingPiece && movingPiece.player === this.currentPlayer) {

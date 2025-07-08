@@ -3,13 +3,6 @@ import Player from '../player';
 import Board from '../board';
 import Square from '../square';
 
-//EN PASSANT:
-//things to track:
-//attacking pawn is on the correct row
-//victim pawn has just moved two spaces
-//  (every move which is not a two-pawn move should reset this bool to false)
-
-
 export default class Pawn extends Piece {
     private STARTING_ROW: number;
 
@@ -62,5 +55,13 @@ export default class Pawn extends Piece {
             }
         }
         return moves;
+    }
+
+    public moveTo(board: Board, newSquare: Square) {
+        const currentSquare = board.findPiece(this);
+        if (currentSquare.col !== newSquare.col && board.isSquareEmpty(newSquare)) {
+            board.setPiece(Board.getBackwardSquare(newSquare, this.player), undefined);
+        }
+        board.movePiece(currentSquare, newSquare);
     }
 }
