@@ -33,15 +33,15 @@ export default class King extends Piece {
         if (!this.hasMoved) {
             const leftRook = board.getPiece(Square.at(this.STARTING_ROW,0));
             const rightRook = board.getPiece(Square.at(this.STARTING_ROW,7));
-            if (leftRook?.pieceType === PieceType.ROOK
+            if (leftRook instanceof Rook
                 && !leftRook.hasMoved
-                && (leftRook as Rook).getAvailableMoves(board).some(
+                && leftRook.getAvailableMoves(board).some(
                     square => square.equals(Square.at(this.STARTING_ROW,3)))) {
                     moves.push(Square.at(this.STARTING_ROW,2));
             }
-            if (rightRook?.pieceType === PieceType.ROOK
+            if (rightRook instanceof Rook
                 && !rightRook.hasMoved
-                && (rightRook as Rook).getAvailableMoves(board).some(
+                && rightRook.getAvailableMoves(board).some(
                     square => square.equals(Square.at(this.STARTING_ROW,5)))) {
                     moves.push(Square.at(this.STARTING_ROW,6));
             }
@@ -63,9 +63,7 @@ export default class King extends Piece {
                 const movedRook = board.getPiece(Square.at(this.STARTING_ROW, 7));
                 board.setPiece(Square.at(this.STARTING_ROW, 7), undefined);
                 board.setPiece(Square.at(this.STARTING_ROW, 5), movedRook);
-                if (movedRook) {
-                    movedRook.hasMoved = true;
-                }
+                movedRook!.hasMoved = true;
             }
         }
         super.moveTo(board, newSquare);

@@ -125,24 +125,19 @@ describe('King', () => {
         board.setPiece(Square.at(0,0), rook);
 
         king.moveTo(board,Square.at(0,2));
-        expect(board.isSquareEmpty(Square.at(0,0)) && 
-        board.getPiece(Square.at(0,3))?.pieceType === PieceType.ROOK).to.be.true;
-    })
+        expect(board.isSquareEmpty(Square.at(0,0))).to.be.true;
+        expect(board.getPiece(Square.at(0,3))).to.be.instanceOf(Rook);
+    });
 
-        it('moves rook when castling as black', () => {
+    it('moves rook when castling as black', () => {
         const king = new King(Player.BLACK);
         const rook = new Rook(Player.BLACK);
         board.setPiece(Square.at(7,4), king);
         board.setPiece(Square.at(7,7), rook);
 
         king.moveTo(board,Square.at(7,6));
-        expect(board.isSquareEmpty(Square.at(7,7)) && 
-        board.getPiece(Square.at(7,5))?.pieceType === PieceType.ROOK).to.be.true;
-    })
-
-    /* TODO:
-     * can't castle when path is under attack
-     * check that rook moves too.
-     */
+        expect(board.isSquareEmpty(Square.at(7,7))).to.be.true;
+        expect(board.getPiece(Square.at(7,5))).to.be.instanceOf(Rook);
+    });
 
 });
