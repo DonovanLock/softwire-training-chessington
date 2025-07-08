@@ -1,11 +1,12 @@
 import Player from './player';
 import GameSettings from './gameSettings';
 import Square from './square';
-import Piece from './pieces/piece';
+import Piece, { PieceType } from './pieces/piece';
 
 export default class Board {
     public currentPlayer: Player;
     private readonly board: (Piece | undefined)[][];
+    public pawnMoved2Steps : (Piece | undefined);
 
     public constructor(currentPlayer?: Player) {
         this.currentPlayer = currentPlayer ? currentPlayer : Player.WHITE;
@@ -21,7 +22,7 @@ export default class Board {
     }
 
     public isSquareEmpty(square: Square) {
-            return this.getPiece(square) === undefined;
+        return this.getPiece(square) === undefined;
     }
 
     public isSquareOnBoard(square: Square) {
@@ -41,9 +42,26 @@ export default class Board {
         throw new Error('The supplied piece is not on the board');
     }
 
+    public static getForwardSquare(square: Square, colour: Player) {
+        if (colour === Player.WHITE) {
+            return Square.at(square.row + 1, square.col);
+        }
+        else {
+            return Square.at(square.row - 1, square.col);
+        }
+    }
+
     public movePiece(fromSquare: Square, toSquare: Square) {
         const movingPiece = this.getPiece(fromSquare);        
         if (!!movingPiece && movingPiece.player === this.currentPlayer) {
+            if (movingPiece.pieceType === PieceType.PAWN && 
+                Board.getForwardSquare(Board.getForwardSquare(fromSquare, this.currentPlayer), this.currentPlayer).equals(toSquare)
+                ) {
+                    this.pawnMoved2Steps = movingPiece;
+            }
+            else {
+                this.pawnMoved2Steps = undefined;
+            }
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);
             this.currentPlayer = (this.currentPlayer === Player.WHITE ? Player.BLACK : Player.WHITE);

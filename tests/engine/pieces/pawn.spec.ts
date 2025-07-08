@@ -186,6 +186,30 @@ describe('Pawn', () => {
 
             moves.should.not.deep.include(Square.at(3, 3));
         });
+
+            it('can perform en passant', () => {
+            const pawn = new Pawn(Player.BLACK);
+            const opposingPawn = new Pawn(Player.WHITE);
+            board.setPiece(Square.at(3,5), pawn);
+            board.setPiece(Square.at(1,4), opposingPawn);
+            board.currentPlayer = Player.WHITE;
+            opposingPawn.moveTo(board, Square.at(3,4));
+
+            const moves = pawn.getAvailableMoves(board);
+            moves.should.deep.include(Square.at(2,4));
+        });
+
+        it('en passant removes victim piece', () => {
+                const pawn = new Pawn(Player.BLACK);
+                const opposingPawn = new Pawn(Player.WHITE);
+                board.setPiece(Square.at(3,5), pawn);
+                board.setPiece(Square.at(1,4), opposingPawn);
+                board.currentPlayer = Player.WHITE;
+                opposingPawn.moveTo(board, Square.at(3,4));
+                pawn.moveTo(board, Square.at(2,4));
+
+                expect(board.isSquareEmpty(Square.at(3,4))).to.be.true;
+        })
     });
 
     it('cannot move if there is a piece in front', () => {
@@ -209,28 +233,4 @@ describe('Pawn', () => {
 
         moves.should.not.deep.include(Square.at(4, 3));
     });
-
-    it('can perform en passant', () => {
-            const pawn = new Pawn(Player.BLACK);
-            const opposingPawn = new Pawn(Player.WHITE);
-            board.setPiece(Square.at(3,5), pawn);
-            board.setPiece(Square.at(1,4), opposingPawn);
-            board.currentPlayer = Player.WHITE;
-            opposingPawn.moveTo(board, Square.at(3,4));
-
-            const moves = pawn.getAvailableMoves(board);
-            moves.should.deep.include(Square.at(2,4));
-    });
-
-    it('en passant removes victim piece', () => {
-            const pawn = new Pawn(Player.BLACK);
-            const opposingPawn = new Pawn(Player.WHITE);
-            board.setPiece(Square.at(3,5), pawn);
-            board.setPiece(Square.at(1,4), opposingPawn);
-            board.currentPlayer = Player.WHITE;
-            opposingPawn.moveTo(board, Square.at(3,4));
-            pawn.moveTo(board, Square.at(2,4));
-
-            expect(board.isSquareEmpty(Square.at(3,4))).to.be.true;
-    })
 });
